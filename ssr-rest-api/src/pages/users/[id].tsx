@@ -6,7 +6,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.query;
   // const userRequest = await axios.get(`http://localhost:3000/api/04/users/${username}`);
   const userRequest = await axios.get(
-    `https://jsonplaceholder.typicode.com/users/${id}`
+    `${process.env.API_ENDPOINT}/users/${id}`,
+    {
+      headers: {
+        authorization: process.env.API_TOKEN,
+      },
+    }
   );
 
   return {
