@@ -21,7 +21,7 @@ export default function Home({ users }: { users: Array<any> }) {
       {users.map((user) => {
         return (
           <li key={user.id}>
-            <Link href={`/users/${user.username}`} passHref>
+            <Link href={`/users/${user.id}`} passHref>
               {user.username}
             </Link>
           </li>
