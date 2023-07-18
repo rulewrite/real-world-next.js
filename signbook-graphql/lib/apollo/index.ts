@@ -7,7 +7,7 @@ import {
 import { useMemo } from 'react';
 
 const isSsr = typeof window === 'undefined';
-let uri = '/api/graphql';
+let uri = 'https://jsonplaceholder.ir/graphql';
 let apolloClient: ApolloClient<NormalizedCacheObject>;
 
 const createApolloClient = () => {
