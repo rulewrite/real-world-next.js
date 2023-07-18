@@ -1,3 +1,4 @@
+import Loading from '@/components/Loading';
 import GET_POSTS from '@/lib/apollo/queries/getPosts';
 import { useQuery } from '@apollo/client';
 
@@ -7,7 +8,7 @@ export default function Home() {
   });
 
   if (loading) {
-    return null;
+    return <Loading />;
   }
 
   return (
