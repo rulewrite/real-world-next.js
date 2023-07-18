@@ -6,7 +6,7 @@ const List = ({ users }: { users: Array<any> }) => {
     <ul>
       {users.map((user) => (
         <li key={user.id}>
-          <Link href={`/users/${user.username}`} passHref>
+          <Link href={`/users/${user.id}`} passHref>
             {user.username}
           </Link>
         </li>
@@ -21,7 +21,8 @@ const Users = () => {
 
   useEffect(() => {
     const fecthData = async () => {
-      const req = await fetch('/api/04/users');
+      // const req = await fetch('/api/04/users');
+      const req = await fetch('https://jsonplaceholder.typicode.com/users');
       const users = await req.json();
 
       setLoading(false);
