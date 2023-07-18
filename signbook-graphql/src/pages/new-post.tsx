@@ -1,8 +1,17 @@
+import ADD_POST from '@/lib/apollo/queries/addPost';
+import { useMutation } from '@apollo/client';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 const NewPost = () => {
+  const router = useRouter();
   const [formState, setFormState] = useState({});
+  const [addPost] = useMutation(ADD_POST, {
+    onCompleted: () => {
+      router.push('/');
+    },
+  });
 
   const handleInput = ({ event, name }: any) => {
     setFormState({
@@ -38,7 +47,17 @@ const NewPost = () => {
             className="p-2 rounded-lg w-full"
           />
 
-          <button className="bg-purple-600 p-4 rounded-lg text-gray-50 m-auto mt-4">
+          <button
+            className="bg-purple-600 p-4 rounded-lg text-gray-50 m-auto mt-4"
+            onClick={() =>
+              addPost({
+                variables: {
+                  userId: 1,
+                  ...formState,
+                },
+              })
+            }
+          >
             Submit
           </button>
         </div>
