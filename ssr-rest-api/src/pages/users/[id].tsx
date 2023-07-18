@@ -14,6 +14,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
   );
 
+  if (userRequest.status === 404) {
+    return {
+      notFound: true,
+    };
+  }
+
   return {
     props: {
       user: userRequest.data,
