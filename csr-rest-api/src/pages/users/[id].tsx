@@ -6,7 +6,6 @@ export const getServerSideProps = ({ query }: GetServerSidePropsContext) => {
   return {
     props: {
       id: query.id,
-      authorization: process.env.API_TOKEN,
     },
   };
 };
@@ -29,24 +28,13 @@ const UserData = ({ user }: { user: any }) => {
   );
 };
 
-const UserPage = ({
-  id,
-  authorization,
-}: {
-  id: string;
-  authorization: string;
-}) => {
+const UserPage = ({ id }: { id: string }) => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      const request = await fetch(
-        `https://jsonplaceholder.typicode.com/users/${id}`,
-        {
-          headers: { authorization },
-        }
-      );
+      const request = await fetch(`/api/singleUser?id=${id}`);
 
       const data = await request.json();
 
