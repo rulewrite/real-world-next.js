@@ -14,27 +14,15 @@ export const getServerSideProps = ({ query }: GetServerSidePropsContext) => {
 const UserData = ({ user }: { user: any }) => {
   return (
     <div style={{ display: 'flex' }}>
-      <img
-        src={user.profile_picture}
-        alt={user.username}
-        width={150}
-        height={150}
-      />
       <div>
         <div>
           <b>Username:</b> {user.username}
         </div>
         <div>
-          <b>Full name:</b> {user.first_name} {user.last_name}
-        </div>
-        <div>
           <b>Email:</b> {user.email}
         </div>
         <div>
-          <b>Company:</b> {user.company}
-        </div>
-        <div>
-          <b>Job title:</b> {user.job_title}
+          <b>Company:</b> {user.company.name}
         </div>
       </div>
     </div>
@@ -53,9 +41,12 @@ const UserPage = ({
 
   useEffect(() => {
     const fetchData = async () => {
-      const request = await fetch(`/api/04/users/${id}`, {
-        headers: { authorization },
-      });
+      const request = await fetch(
+        `https://jsonplaceholder.typicode.com/users/${id}`,
+        {
+          headers: { authorization },
+        }
+      );
 
       const data = await request.json();
 
