@@ -1,5 +1,5 @@
+import GET_POSTS from '@/lib/apollo/queries/getPosts';
 import { useQuery } from '@apollo/client';
-import GET_POSTS from '../../lib/apollo/queries/getPosts';
 
 export default function Home() {
   const { loading, data } = useQuery(GET_POSTS, {
