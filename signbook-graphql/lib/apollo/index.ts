@@ -4,6 +4,7 @@ import {
   InMemoryCache,
   NormalizedCacheObject,
 } from '@apollo/client';
+import { useMemo } from 'react';
 
 const isSsr = typeof window === 'undefined';
 let uri = '/api/graphql';
@@ -38,4 +39,10 @@ export const initApollo = (
   }
 
   return client;
+};
+
+export const useApollo = (initialState: NormalizedCacheObject) => {
+  return useMemo(() => {
+    return initApollo(initialState);
+  }, [initialState]);
 };
