@@ -1,30 +1,36 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { GetServerSideProps } from 'next';
 import Link from 'next/link';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { id } = context.query;
-  // const userRequest = await axios.get(`http://localhost:3000/api/04/users/${username}`);
-  const userRequest = await axios.get(
-    `${process.env.API_ENDPOINT}/users/${id}`,
-    {
-      headers: {
-        authorization: process.env.API_TOKEN,
-      },
-    }
-  );
+  try {
+    const { id } = context.query;
+    // const userRequest = await axios.get(`http://localhost:3000/api/04/users/${username}`);
+    const userRequest = await axios.get(
+      `${process.env.API_ENDPOINT}/users/${id}`,
+      {
+        headers: {
+          authorization: process.env.API_TOKEN,
+        },
+      }
+    );
 
-  if (userRequest.status === 404) {
+    return {
+      props: {
+        user: userRequest.data,
+      },
+    };
+  } catch (error) {
+    if (error instanceof AxiosError && error.response?.status === 404) {
+      return {
+        notFound: true,
+      };
+    }
+
     return {
       notFound: true,
     };
   }
-
-  return {
-    props: {
-      user: userRequest.data,
-    },
-  };
 };
 
 const UserPage = ({ user }: { user: any }) => {
