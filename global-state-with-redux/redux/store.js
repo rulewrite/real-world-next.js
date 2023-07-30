@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { shallowEqual, useSelector } from 'react-redux';
 import { applyMiddleware, legacy_createStore as createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
@@ -71,4 +72,8 @@ export const useStore = (initialState) => {
   return useMemo(() => {
     return initializeStore(initialState);
   }, [initialState]);
+};
+
+export const useGlobalItems = () => {
+  return useSelector((state) => state, shallowEqual);
 };
