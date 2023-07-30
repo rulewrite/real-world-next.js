@@ -14,13 +14,18 @@ function Cart() {
     .map(([id, amount]) => getItem(id).price * amount)
     .reduce((a, b) => a + b, 0);
 
+  const amounts = Object.entries(items).map(([id, amount]) => {
+    return {
+      item: getItem(id),
+      amount,
+    };
+  });
+
   return (
     <div>
       <h1 className="text-xl font-bold"> Total: ${totalAmount} </h1>
       <div>
-        {[
-          /* To be implemented */
-        ].map(({ item, amount }) => (
+        {amounts.map(({ item, amount }) => (
           <div key={item.id}>
             x{amount} {item.name} (${amount * item.price})
           </div>
