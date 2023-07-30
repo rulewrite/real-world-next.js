@@ -10,6 +10,11 @@ export default function Home() {
         <p className="highlight">hello</p>
         <p className="highlight">hello</p>
       </div>
+      <div>
+        <button className={styles['button-default']}>normal</button>
+        <button className={styles['button-success']}>success</button>
+        <button className={styles['button-danger']}>danger</button>
+      </div>
     </div>
   );
 }
