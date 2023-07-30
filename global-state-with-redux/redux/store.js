@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { applyMiddleware, legacy_createStore as createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
@@ -64,4 +65,10 @@ export const initializeStore = (preloadedState) => {
     store = _store;
   }
   return _store;
+};
+
+export const useStore = (initialState) => {
+  return useMemo(() => {
+    return initializeStore(initialState);
+  }, [initialState]);
 };
