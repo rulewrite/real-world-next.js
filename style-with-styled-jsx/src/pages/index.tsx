@@ -1,3 +1,4 @@
+import FancyButton from '@/components/FancyButton';
 import styles from '@/styles/Home.module.css';
 import { Inter } from 'next/font/google';
 import Head from 'next/head';
@@ -16,6 +17,7 @@ export default function Home() {
       </Head>
       <main className={`${styles.main} ${inter.className}`}>
         <Button>hello</Button>
+        <FancyButton>world</FancyButton>
       </main>
     </>
   );
