@@ -1,7 +1,11 @@
 import Link from 'next/link';
+import { useGlobalItems } from '../redux/store';
 
 function Navbar() {
-  const totalItemsAmount = 0; /* To be implemented */
+  const items = useGlobalItems();
+  const totalItemsAmount = Object.keys(items)
+    .map((id) => items[id])
+    .reduce((a, b) => a + b, 0);
 
   return (
     <div className="w-full bg-purple-600 p-4 text-white">
