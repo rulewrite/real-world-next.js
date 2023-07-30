@@ -6,6 +6,27 @@ function ProductCard({ id, name, price, picture }) {
   const { setItems, items } = useContext(ShoppingCartContext);
   const amount = id in items ? items[id] : 0;
 
+  const addToCart = (isAdd) => {
+    const currentAmount = items[id] ?? 0;
+    if (isAdd) {
+      setItems({
+        ...items,
+        [id]: currentAmount + 1,
+      });
+
+      return;
+    }
+
+    if (currentAmount === 0) {
+      return;
+    }
+
+    setItems({
+      ...items,
+      [id]: currentAmount - 1,
+    });
+  };
+
   return (
     <div className="bg-gray-200 p-6 rounded-md">
       <div className="relative 100% h-40 m-auto">
@@ -18,15 +39,15 @@ function ProductCard({ id, name, price, picture }) {
       <div className="flex justify-between mt-4 w-2/4 m-auto">
         <button
           className="pl-2 pr-2 bg-red-400 text-white rounded-md"
-          disabled={false /* To be implemented */}
-          onClick={() => {} /* To be implemented */}
+          disabled={amount === 0}
+          onClick={() => addToCart(false)}
         >
           -
         </button>
         <div>{amount}</div>
         <button
           className="pl-2 pr-2 bg-green-400 text-white rounded-md"
-          onClick={() => {} /* To be implemented */}
+          onClick={() => addToCart(true)}
         >
           +
         </button>
