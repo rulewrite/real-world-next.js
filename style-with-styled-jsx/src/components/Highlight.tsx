@@ -13,6 +13,13 @@ const Highlight = (props: PropsWithChildren) => {
           }
         `}
       </style>
+      <style jsx global>
+        {`
+          div {
+            background: blue;
+          }
+        `}
+      </style>
     </>
   );
 };
