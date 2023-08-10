@@ -1,21 +1,33 @@
-import { Button, Text, VStack, useColorMode } from '@chakra-ui/react';
+import UserCard from '@/components/UserCard';
+import users from '@/data/users';
+import { Box, Grid, GridItem, Text, useColorMode } from '@chakra-ui/react';
 
 export default function Home() {
   const { colorMode, toggleColorMode } = useColorMode();
 
   return (
-    <VStack padding="10">
-      <Text fontSize="4xl" fontWeight="bold" as="h1">
-        Chakra UI
+    <Box>
+      <Text
+        fontSize="xxx-large"
+        fontWeight="extrabold"
+        textAlign="center"
+        marginTop="9"
+      >
+        ACME Corporation Employees
       </Text>
-
-      <Text fontSize="2xl" fontWeight="semibold" as="h2">
-        Rendering in {colorMode} mode
-      </Text>
-
-      <Button aria-label="UI Theme" onClick={toggleColorMode}>
-        Toggle {colorMode === 'light' ? 'dark' : 'light'} mode
-      </Button>
-    </VStack>
+      <Grid
+        gridTemplateColumns={['1fr', 'repeat(2, 1fr)', 'repeat(3, 1fr)']}
+        gridGap="10"
+        padding="10"
+      >
+        {users.map((user) => {
+          return (
+            <GridItem key={user.id}>
+              <UserCard {...user} />
+            </GridItem>
+          );
+        })}
+      </Grid>
+    </Box>
   );
 }
