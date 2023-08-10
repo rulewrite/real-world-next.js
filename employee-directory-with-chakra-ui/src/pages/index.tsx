@@ -1,10 +1,8 @@
 import UserCard from '@/components/UserCard';
 import users from '@/data/users';
-import { Box, Grid, GridItem, Text, useColorMode } from '@chakra-ui/react';
+import { Box, Grid, GridItem, Text } from '@chakra-ui/react';
 
 export default function Home() {
-  const { colorMode, toggleColorMode } = useColorMode();
-
   return (
     <Box>
       <Text

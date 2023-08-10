@@ -8,16 +8,7 @@ import {
 } from '@chakra-ui/react';
 import Link from 'next/link';
 
-const UserCard = (props: {
-  id: string;
-  username: string;
-  first_name: string;
-  last_name: string;
-  description: string;
-  job_title: string;
-  avatar: string;
-  cover_image: string;
-}) => {
+const UserCard = (props: User) => {
   return (
     <Link href={`/user/${props.username}`} passHref>
       <>
