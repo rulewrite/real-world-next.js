@@ -9,6 +9,7 @@ async function main() {
   try {
     await app.prepare();
 
+    const handle = app.getRequestHandler();
     const server = express();
 
     server
@@ -21,6 +22,10 @@ async function main() {
       })
       .get('/api/greet', (request, response) => {
         response.json({ name: request?.query?.name ?? 'unknown' });
+      })
+      .get(/_next\/.+/, (request, response) => {
+        const parsedUrl = parse(request.url, true);
+        handle(request, response, parsedUrl);
       })
       .listen(3000, () => {
         console.log('server ready');
