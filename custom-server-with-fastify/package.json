@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "fastify": "^4.21.0",
+    "fastify": "^3.29.5",
     "fastify-nextjs": "^7.3.0",
     "next": "^12.3.4",
     "react": "^18.2.0",
