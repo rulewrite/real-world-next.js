@@ -9,6 +9,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@testing-library/react": "^14.0.0",
     "autoprefixer": "^10.3.1",
     "next": "13.1.1",
     "postcss": "^8.3.6",
