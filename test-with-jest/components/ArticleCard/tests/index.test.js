@@ -19,4 +19,10 @@ describe('ArticleCard', () => {
     const summary = screen.getByText(cutTextToLength(article.body, 100));
     expect(summary).toBeDefined();
   });
+
+  test('생성된 크레딧엔 작성자 이름이 포함되어야 한다', async () => {
+    render(<ArticleCard {...article} />);
+    const credits = screen.getByText(/John Doe/gm);
+    expect(credits.textContent).toBe('Written by John Doe');
+  });
 });
