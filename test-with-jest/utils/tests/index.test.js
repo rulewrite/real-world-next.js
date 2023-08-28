@@ -1,4 +1,9 @@
-import { cutTextToLength, slugify } from '../index';
+import {
+  composeArticleSlug,
+  cutTextToLength,
+  extractArticleIdFromSlug,
+  slugify,
+} from '../index';
 
 /**
  * 테스트와 관련된 그룹
@@ -31,5 +36,29 @@ describe('slugify는 문자열을 URL-safe하게 만든다', () => {
     const initialString = 'This is a string to slugify!@#$%^&*()+';
     const slugifiedString = slugify(initialString);
     expect(slugifiedString).toEqual('this-is-a-string-to-slugify');
+  });
+});
+
+describe('composeArticleSlug는 제목과 ID가 지정된 아티클 URL을 생성한다', () => {
+  test('아티클 URL을 만든다', () => {
+    const title = 'This is a title';
+    const id = 'j81j91s';
+    const articleSlug = composeArticleSlug(id, title);
+    expect(articleSlug).toEqual('this-is-a-title-j81j91s');
+  });
+
+  test('특수 문자가 포함된 아티클 URL을 만든다', () => {
+    const title = 'This is a title!@#$%^&*()+';
+    const id = 'j81j91s';
+    const articleSlug = composeArticleSlug(id, title);
+    expect(articleSlug).toEqual('this-is-a-title-j81j91s');
+  });
+});
+
+describe('extractArticleIdFromSlug는 아티클 URL에서 ID를 올바르게 추출한다', () => {
+  test('아티클 URL에서 올바른 ID를 추출한다', () => {
+    const articleUrl = 'this-is-a-title-j81j91s';
+    const id = extractArticleIdFromSlug(articleUrl);
+    expect(id).toEqual('j81j91s');
   });
 });
