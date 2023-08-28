@@ -1,4 +1,4 @@
-import { cutTextToLength } from '../index';
+import { cutTextToLength, slugify } from '../index';
 
 /**
  * 테스트와 관련된 그룹
@@ -17,5 +17,19 @@ describe('cutTextToLength는 문자열이 너무 길면 자른다', () => {
     const initialString = '7 chars';
     const cutResult = cutTextToLength(initialString, 10);
     expect(cutResult).toEqual('7 chars');
+  });
+});
+
+describe('slugify는 문자열을 URL-safe하게 만든다', () => {
+  test('문자열을 URL-safe 형식으로 변환한다.', () => {
+    const initialString = 'This is a string to slugify';
+    const slugifiedString = slugify(initialString);
+    expect(slugifiedString).toEqual('this-is-a-string-to-slugify');
+  });
+
+  test('특수 문자가 포함된 문자열을 슬러그화 한다', () => {
+    const initialString = 'This is a string to slugify!@#$%^&*()+';
+    const slugifiedString = slugify(initialString);
+    expect(slugifiedString).toEqual('this-is-a-string-to-slugify');
   });
 });
