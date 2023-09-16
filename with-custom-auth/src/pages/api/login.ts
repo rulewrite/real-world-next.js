@@ -6,6 +6,13 @@ const login = (req: NextApiRequest, res: NextApiResponse) => {
   if (method !== 'POST') {
     return res.status(404).end();
   }
+
+  const { email, password } = req.body;
+  if (!email || !password) {
+    return res.status(400).json({
+      error: 'Missing required params',
+    });
+  }
 };
 
 export default login;
