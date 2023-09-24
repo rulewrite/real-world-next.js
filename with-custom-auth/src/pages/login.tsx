@@ -1,3 +1,4 @@
+import { useAuth } from '@/lib/hooks/auth';
 import { useRouter } from 'next/router';
 import { FormEvent, useState } from 'react';
 import styles from '../styles/app.module.css';
@@ -26,6 +27,17 @@ async function handleLogin(email: string, password: string) {
 export default function Login() {
   const router = useRouter();
   const [loginError, setLoginError] = useState(null);
+  const { loading, loggedIn } = useAuth();
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (!loading && loggedIn) {
+    router.push('/protected-route');
+
+    return null;
+  }
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
