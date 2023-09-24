@@ -1,4 +1,5 @@
 import { encode } from '@/lib/jwt';
+import { serialize } from 'cookie';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 const login = (req: NextApiRequest, res: NextApiResponse) => {
@@ -18,11 +19,22 @@ const login = (req: NextApiRequest, res: NextApiResponse) => {
   const user = authenticateUser(email, password);
   if (!user) {
     return res.status(401).json({
+      success: false,
       error: 'Wrong email of password',
     });
   }
 
-  return res.json({ user });
+  return res
+    .setHeader(
+      'Set-Cookie',
+      serialize('my_auth', user, {
+        path: '/',
+        httpOnly: true,
+      })
+    )
+    .json({
+      success: true,
+    });
 };
 
 function authenticateUser(email: string, password: string) {
