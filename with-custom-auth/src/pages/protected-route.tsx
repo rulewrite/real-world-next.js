@@ -10,6 +10,22 @@ export default function ProtectedRoute() {
     router.push('/login');
   }
 
+  const handleLogout = async () => {
+    const response = await fetch('/api/logout', {
+      method: 'POST',
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      router.push('/login');
+
+      return;
+    }
+
+    throw new Error('Fail to logout');
+  };
+
   return (
     <div className={styles.container}>
       {loading && <p>Loading...</p>}
@@ -19,6 +35,7 @@ export default function ProtectedRoute() {
         <>
           <h1>Protected Route: {user && user.name}</h1>
           <p>You can&apos;t see me if not logged-in!</p>
+          <button onClick={() => handleLogout()}>logout</button>
         </>
       )}
     </div>
