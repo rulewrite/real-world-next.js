@@ -4,7 +4,7 @@ import styles from '../styles/app.module.css';
 
 export default function ProtectedRoute() {
   const router = useRouter();
-  const { loading, error, loggedIn } = useAuth();
+  const { loading, error, loggedIn, user } = useAuth();
 
   if (!loading && !loggedIn) {
     router.push('/login');
@@ -17,7 +17,7 @@ export default function ProtectedRoute() {
 
       {loggedIn && (
         <>
-          <h1>Protected Route</h1>
+          <h1>Protected Route: {user && user.name}</h1>
           <p>You can&apos;t see me if not logged-in!</p>
         </>
       )}

@@ -2,7 +2,11 @@ import { useEffect, useState } from 'react';
 
 export function useAuth() {
   const [loggedIn, setLoggedIn] = useState(false);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<{
+    email: string;
+    id: string;
+    name: string;
+  } | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
