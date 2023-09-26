@@ -36,6 +36,15 @@ export default function ProtectedRoute() {
           <h1>Protected Route: {user && user.name}</h1>
           <p>You can&apos;t see me if not logged-in!</p>
           <button onClick={() => handleLogout()}>logout</button>
+          <button
+            onClick={() => {
+              document.cookie =
+                'my_auth=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+              router.push('/login');
+            }}
+          >
+            logout js handleCoookie
+          </button>
         </>
       )}
     </div>
