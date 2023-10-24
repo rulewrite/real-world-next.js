@@ -1,4 +1,5 @@
 import getAllProducts from '@/lib/graphql/queries/getAllProducts';
+import getProductDeatil from '@/lib/graphql/queries/getProductDetail';
 import { GetStaticPaths, GetStaticProps } from 'next';
 
 // 각 상품별로 정적 페이지 생성
@@ -19,9 +20,26 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps: GetStaticProps<
+  { product: Product | null },
+  { slug: string }
+> = async ({ params }) => {
+  const slug = params?.slug;
+
+  if (!slug) {
+    return {
+      props: {
+        product: null,
+      },
+    };
+  }
+
+  const { products } = await getProductDeatil(slug);
+
   return {
-    props: {},
+    props: {
+      product: products[0] ?? null,
+    },
   };
 };
 

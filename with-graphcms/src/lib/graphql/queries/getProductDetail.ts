@@ -1,7 +1,7 @@
 import { gql } from 'graphql-request';
 import graphQLClient from '..';
 
-const getProductDetail = gql`
+const getProductBySlug = gql`
   query GetProductBySlug($slug: String!) {
     products(where: { slug: $slug }) {
       id
@@ -17,6 +17,10 @@ const getProductDetail = gql`
   }
 `;
 
-export default graphQLClient.request<{ products: Array<Product> }>(
-  getProductDetail
-);
+const getProductDeatil = (slug: string) => {
+  return graphQLClient.request<{ products: Array<Product> }>(getProductBySlug, {
+    slug,
+  });
+};
+
+export default getProductDeatil;
