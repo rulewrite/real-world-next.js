@@ -7,4 +7,5 @@ interface Product {
     id: string;
     url: string;
   }>;
+  description: string;
 }

@@ -12,6 +12,7 @@ const getAllProducts = gql`
         id
         url
       }
+      description
     }
   }
 `;
