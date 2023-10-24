@@ -1,5 +1,7 @@
+import ProductCard from '@/components/ProductCard';
 import graphQLClient from '@/lib/graphql';
 import getAllProducts from '@/lib/graphql/queries/getAllProducts';
+import { Grid } from '@chakra-ui/react';
 import { GetStaticProps } from 'next';
 
 export const getStaticProps: GetStaticProps = async () => {
@@ -15,6 +17,14 @@ export const getStaticProps: GetStaticProps = async () => {
   };
 };
 
-export default function Home() {
-  return <>hello world</>;
-}
+const Home: React.FC<{ products: Array<Product> }> = (props) => {
+  return (
+    <Grid gridTemplateColumns="repeat(4, 1fr)" gap="5">
+      {props.products.map((product) => {
+        return <ProductCard key={product.id} {...product} />;
+      })}
+    </Grid>
+  );
+};
+
+export default Home;
