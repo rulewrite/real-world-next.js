@@ -1,6 +1,7 @@
 import { gql } from 'graphql-request';
+import graphQLClient from '..';
 
-export default gql`
+const getAllProducts = gql`
   query GetAllProducts {
     products {
       id
@@ -14,3 +15,7 @@ export default gql`
     }
   }
 `;
+
+export default graphQLClient.request<{ products: Array<Product> }>(
+  getAllProducts
+);

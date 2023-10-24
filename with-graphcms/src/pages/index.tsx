@@ -1,13 +1,10 @@
 import ProductCard from '@/components/ProductCard';
-import graphQLClient from '@/lib/graphql';
 import getAllProducts from '@/lib/graphql/queries/getAllProducts';
 import { Grid } from '@chakra-ui/react';
 import { GetStaticProps } from 'next';
 
 export const getStaticProps: GetStaticProps = async () => {
-  const { products } = await graphQLClient.request<{
-    products: Array<Product>;
-  }>(getAllProducts);
+  const { products } = await getAllProducts;
 
   return {
     revalidate: 60, // 60초
