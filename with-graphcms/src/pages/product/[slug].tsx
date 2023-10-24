@@ -1,3 +1,4 @@
+import CartContext from '@/lib/context/Cart';
 import getAllProducts from '@/lib/graphql/queries/getAllProducts';
 import getProductDeatil from '@/lib/graphql/queries/getProductDetail';
 import {
@@ -11,6 +12,7 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { GetStaticPaths, GetStaticProps } from 'next';
+import { useContext, useState } from 'react';
 
 interface Props {
   product: Product | null;
@@ -80,9 +82,21 @@ const SelectQuantity: React.FC<{ onChange: (value: string) => void }> = (
 };
 
 const ProductPage: React.FC<Props> = ({ product }) => {
+  const [quantity, setQuantity] = useState(0);
+  const { items, setItems } = useContext(CartContext);
+
   if (!product) {
     return null;
   }
+
+  const alreadyInCart = items[product.id];
+
+  const addToCart = () => {
+    setItems({
+      ...items,
+      [product.id]: quantity,
+    });
+  };
 
   return (
     <Flex rounded="xl" boxShadow="2xl" w="full" p={16} bgColor="white">
@@ -110,8 +124,14 @@ const ProductPage: React.FC<Props> = ({ product }) => {
         <Divider my="6" />
 
         <Grid gridTemplateColumns="2fr 1fr" gap="5" alignItems="center">
-          <SelectQuantity onChange={() => {}} />
-          <Button colorScheme="blue">Add to Cart</Button>
+          <SelectQuantity
+            onChange={(quantity) => {
+              setQuantity(parseInt(quantity));
+            }}
+          />
+          <Button colorScheme="blue" onClick={addToCart}>
+            {alreadyInCart ? 'Update' : 'Add to Cart'}
+          </Button>
         </Grid>
       </Box>
     </Flex>
