@@ -1,10 +1,13 @@
 import getProductDetailsById from '@/lib/graphql/queries/getProductDetailsById';
-import { NextApiRequest } from 'next';
+import { NextApiRequest, NextApiResponse } from 'next';
 import Stripe from 'stripe';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? '');
 
-export default async function handler(req: NextApiRequest) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   const { items } = req.body;
 
   const { products } = await getProductDetailsById(Object.keys(items));
@@ -28,4 +31,16 @@ export default async function handler(req: NextApiRequest) {
       quantity: items[product.id],
     };
   });
+
+  const session = await stripe.checkout.sessions.create({
+    // 'subscription' 또는 'setup'을 지정할 수 있다.
+    mode: 'payment',
+    line_items,
+    payment_method_types: ['card', 'sepa_debit'],
+    // .env.* 파일에서 지정
+    success_url: `${process.env.URL}/success`,
+    cancel_url: `${process.env.URL}/cancel`,
+  });
+
+  res.status(201).json({ session });
 }
