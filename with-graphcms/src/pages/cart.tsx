@@ -1,5 +1,6 @@
 import CartContext from '@/lib/context/Cart';
 import getProductsById from '@/lib/graphql/queries/getProductsById';
+import getStripe from '@/lib/stripe';
 import { Box, Button, Divider, Flex, Text } from '@chakra-ui/react';
 import Link from 'next/link';
 import { useContext, useEffect, useState } from 'react';
@@ -43,6 +44,27 @@ const Cart: React.FC = () => {
       })
       .reduce((x, y) => x + y)
       .toFixed(2);
+  };
+
+  const handlePayment = async () => {
+    const stripe = await getStripe();
+
+    if (!stripe) {
+      return;
+    }
+
+    const res = await fetch('/api/checkout', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        items,
+      }),
+    });
+
+    const { session } = await res.json();
+    await stripe.redirectToCheckout({ sessionId: session.id });
   };
 
   return (
@@ -98,7 +120,9 @@ const Cart: React.FC = () => {
                 Total: {getTotal()}
               </Text>
 
-              <Button colorScheme="blue">Pay now</Button>
+              <Button colorScheme="blue" onClick={handlePayment}>
+                Pay now
+              </Button>
             </Flex>
           </>
         )}
