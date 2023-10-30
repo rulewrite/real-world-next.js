@@ -9,3 +9,5 @@ interface Product {
   }>;
   description: string;
 }
+
+type CartProduct = Pick<Product, 'id' | 'name' | 'price' | 'slug'>;
