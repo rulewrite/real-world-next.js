@@ -10,6 +10,51 @@ const shipping_address_collection: Stripe.Checkout.SessionCreateParams.ShippingA
     allowed_countries: ['IT', 'US'],
   };
 
+// 배송 방식에 따라 배송지를 다르게 책정
+const shipping_options: Array<Stripe.Checkout.SessionCreateParams.ShippingOption> =
+  [
+    {
+      shipping_rate_data: {
+        type: 'fixed_amount',
+        fixed_amount: {
+          amount: 0,
+          currency: 'EUR',
+        },
+        display_name: '무료배송',
+        delivery_estimate: {
+          minimum: {
+            unit: 'business_day',
+            value: 3,
+          },
+          maximum: {
+            unit: 'business_day',
+            value: 5,
+          },
+        },
+      },
+    },
+    {
+      shipping_rate_data: {
+        type: 'fixed_amount',
+        fixed_amount: {
+          amount: 499,
+          currency: 'EUR',
+        },
+        display_name: '비행기로 배송',
+        delivery_estimate: {
+          minimum: {
+            unit: 'business_day',
+            value: 1,
+          },
+          maximum: {
+            unit: 'business_day',
+            value: 1,
+          },
+        },
+      },
+    },
+  ];
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -45,6 +90,7 @@ export default async function handler(
     line_items,
     payment_method_types: ['card', 'sepa_debit'],
     shipping_address_collection,
+    shipping_options,
     // .env.* 파일에서 지정
     success_url: `${process.env.URL}/success`,
     cancel_url: `${process.env.URL}/cancel`,
